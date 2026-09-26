@@ -221,8 +221,18 @@
 }
 body {
   margin: 0;
-  background: radial-gradient(circle at 0 0, #fff0e1 0 12%, transparent 30%),
-    radial-gradient(circle at 100% 0, #e2f5ff 0 12%, transparent 30%), #f8fbfc;
+
+  background: linear-gradient(
+      rgba(248, 251, 252, 0.75),
+      rgba(248, 251, 252, 0.75)
+    ),
+    url("images/background.png");
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+
   color: var(--ink);
   font-family: Vazirmatn, Tahoma, sans-serif;
 }
