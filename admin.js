@@ -697,24 +697,62 @@ async function deleteCategory(id) {
 }
 
 async function uploadImage(file) {
-  try {
+  return new Promise((resolve) => {
     const formData = new FormData();
     formData.append("image", file);
-    const response = await fetch("https://moj-ice-back.onrender.com/upload", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message || "خطا در آپلود عکس");
+
+    const xhr = new XMLHttpRequest();
+
+    const progressBar = document.getElementById("progressBar");
+
+    if (progressBar) {
+      progressBar.style.width = "0%";
     }
-    console.log("🔥 NEW UPLOAD FUNCTION 🔥");
-    console.log("SERVER DATA:", data);
-    console.log("SERVER IMAGE URL:", data.imageUrl);
-    return data.imageUrl;
-  } catch (error) {
-    console.error("Upload image error:", error);
-    alert("آپلود عکس با خطا مواجه شد.");
-    return null;
-  }
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && progressBar) {
+        const percent = (event.loaded / event.total) * 100;
+        progressBar.style.width = percent + "%";
+      }
+    };
+
+    xhr.onload = () => {
+      try {
+        const data = JSON.parse(xhr.responseText);
+
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log("UPLOAD SUCCESS:", data);
+
+          if (progressBar) {
+            progressBar.style.width = "100%";
+          }
+
+          resolve(data.imageUrl);
+        } else {
+          throw new Error(data.message || "خطا در آپلود عکس");
+        }
+      } catch (error) {
+        console.error("Upload error:", error);
+
+        alert("آپلود عکس با خطا مواجه شد.");
+
+        resolve(null);
+      }
+    };
+
+    xhr.onerror = () => {
+      console.error("Upload network error");
+
+      alert("خطا در ارتباط با سرور.");
+
+      resolve(null);
+    };
+
+    xhr.open(
+      "POST",
+      "https://moj-ice-back.onrender.com/upload"
+    );
+
+    xhr.send(formData);
+  });
 }
