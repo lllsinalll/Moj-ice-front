@@ -511,12 +511,6 @@ button {
   }
 }
 @media (max-width: 650px) {
-  .admin-entry {
-    min-width: 160px;
-    padding: 14px 28px;
-    font-size: 17px;
-    border-radius: 18px;
-  }
   .header {
     height: 105px;
   }
@@ -559,10 +553,8 @@ button {
   }
 }
 
-/* Admin entry button */
 .header-inner {
   width: min(1450px, 100%);
-  margin: auto;
   padding: 0 24px;
 
   display: flex;
@@ -575,14 +567,15 @@ button {
   align-items: center;
   justify-content: center;
 
-  padding: 12px 24px;
   min-width: 140px;
+  padding: 12px 24px;
+
+  background: var(--orange);
+  color: white;
 
   border-radius: 16px;
-  background: var(--orange);
-  color: #fff;
-
   text-decoration: none;
+
   font-size: 16px;
   font-weight: 800;
 
@@ -592,4 +585,17 @@ button {
 
 .admin-entry:hover {
   transform: translateY(-3px);
+}
+
+@media (max-width: 650px) {
+  .header-inner {
+    padding: 0 12px;
+  }
+
+  .admin-entry {
+    min-width: 150px;
+    padding: 14px 20px;
+    font-size: 17px;
+    border-radius: 18px;
+  }
 }
