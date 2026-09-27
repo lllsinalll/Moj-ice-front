@@ -226,7 +226,7 @@ body {
       rgba(248, 251, 252, 0.75),
       rgba(248, 251, 252, 0.75)
     ),
-    url("images/background.png");
+    url("images/backimage.png");
 
   background-size: cover;
   background-position: center;
@@ -360,12 +360,43 @@ button {
   }
 }
 .section-title {
-  color: var(--orange);
-  font-size: 20px;
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 35px 5px 18px;
+
+  color: var(--navy);
+
+  font-size: 22px;
+
   font-weight: 900;
-  margin: 0 0 12px;
-  border-right: 7px solid var(--blue);
-  padding-right: 10px;
+
+  animation: fadeUp 0.5s ease both;
+}
+
+/* خط کوچک کنار عنوان */
+
+.section-title::before {
+  content: "";
+
+  width: 6px;
+
+  height: 30px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(180deg, #ffbd78, var(--orange));
+}
+
+/* اگر ایموجی اول متن باشد */
+
+.section-title {
+  direction: rtl;
 }
 .product-list {
   display: grid;
