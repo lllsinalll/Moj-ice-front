@@ -1302,42 +1302,92 @@ dialog::backdrop {
 /* =====================
       RESPONSIVE
 ===================== */
+/* =========================
+   DIALOG
+========================= */
+
+dialog {
+  border: none;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.dialog-form .actions button {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* =========================
+   TABLET / MOBILE
+========================= */
 
 @media (max-width: 650px) {
+  /* ITEMS */
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    overflow: visible;
+  }
+
+  .item .emoji {
+    align-self: flex-end;
+  }
+
+  .item .price {
+    width: 100%;
+    text-align: right;
+    margin-top: 5px;
+  }
+
+  .item .badges {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .item .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 10px;
+    position: static;
+  }
+
+  /* CATEGORY */
+
+  .chead {
+    padding: 15px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .cname {
+    font-size: 16px;
+  }
+
   /* HEADER */
 
   header {
     height: auto;
-
     min-height: 75px;
-
     padding: 15px 18px;
-
     flex-direction: column;
-
     align-items: stretch;
-
     gap: 12px;
-  }
-
-  header b {
-    justify-content: center;
-  }
-
-  header div {
-    justify-content: center;
-
-    width: 100%;
   }
 
   header a,
   header button {
     flex: 1;
-
     height: 40px;
-
     padding: 0 10px;
-
     font-size: 13px;
   }
 
@@ -1345,19 +1395,13 @@ dialog::backdrop {
 
   main {
     width: 94%;
-
     margin: 20px auto;
   }
 
-  /* HEADING */
-
   .heading {
     flex-direction: column;
-
     align-items: stretch;
-
     gap: 15px;
-
     padding: 20px;
   }
 
@@ -1369,53 +1413,60 @@ dialog::backdrop {
     width: 100%;
   }
 
-  /* CATEGORY */
-
-  .chead {
-    padding: 15px;
-
-    gap: 10px;
-
-    flex-wrap: wrap;
-  }
-
-  .cname {
-    font-size: 16px;
-  }
-
-  /* ITEMS */
-
-  .item {
-    grid-template-columns: 45px 1fr;
-
-    gap: 12px;
-  }
-
-  .price {
-    grid-column: 2;
-  }
-
-  .item .buttons {
-    grid-column: 2;
-  }
-
-  .emoji {
-    width: 45px;
-
-    height: 45px;
-  }
-
   /* MODAL */
-
-  .dialog-form {
-    padding: 22px;
-  }
 
   dialog {
     width: 94%;
   }
 
-  /* UPLOAD */
+  .dialog-form {
+    padding: 22px;
+  }
+
+  .dialog-form .actions {
+    flex-direction: row;
+  }
+
+  .dialog-form .actions button {
+    width: auto;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 600px) {
+  #itemDialog {
+    width: 90vw;
+    max-width: 90vw;
+    max-height: 85vh;
+    padding: 0;
+    margin: auto;
+  }
+
+  #itemDialog .dialog-form {
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  .item .buttons,
+  .item button,
+  .add {
+    position: relative;
+    z-index: 20;
+    pointer-events: auto;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .emoji {
+    width: 45px;
+    height: 45px;
+  }
 
   .file-label {
     flex-wrap: wrap;
@@ -1423,7 +1474,6 @@ dialog::backdrop {
 
   .file-button {
     width: 100%;
-
     text-align: center;
   }
 }
@@ -1444,19 +1494,6 @@ dialog::backdrop {
 
 /* Mobile */
 
-@media (max-width: 600px) {
-  #itemDialog {
-    display: none; /* Chrome, Edge, Safari */
-    max-height: calc(100dvh - 30px);
-  }
-
-  #itemDialog .dialog-form {
-    max-height: calc(100dvh - 30px);
-    overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE */
-  }
-}
 /* =====================
    MODAL BUTTONS NORMAL FIX
 ===================== */
@@ -1656,125 +1693,7 @@ dialog::backdrop {
   color: #657786;
   font-weight: 700;
 }
-@media (max-width: 700px) {
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 650px) {
-  .item {
-    flex-wrap: wrap;
-  }
 
-  .item .badges {
-    width: 100%;
-    order: 4;
-    margin-top: 8px;
-  }
-
-  .item .buttons {
-    width: 100%;
-    order: 5;
-    margin-top: 10px;
-  }
-}
-@media (max-width: 650px) {
-  .item .buttons {
-    position: static;
-    transform: none;
-  }
-}
-@media (max-width: 650px) {
-  .item {
-    flex-wrap: wrap;
-  }
-
-  .item .badges {
-    width: 100%;
-    margin-top: 8px;
-  }
-
-  .item .buttons {
-    width: 100%;
-    justify-content: flex-start;
-    margin-top: 10px;
-  }
-}
-@media (max-width: 650px) {
-  .item > .buttons {
-    flex-basis: 100%;
-    margin-top: 12px;
-  }
-}
-@media (max-width: 650px) {
-  .item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px;
-    align-items: center;
-  }
-
-  .item > .emoji {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .item > div:not(.emoji):not(.price):not(.buttons):not(.badges) {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .item .price {
-    grid-column: 1 / -1;
-    width: 100%;
-    text-align: center;
-  }
-
-  .item .badges {
-    grid-column: 1 / -1;
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .item .buttons {
-    grid-column: 1 / -1;
-    width: 100%;
-    justify-content: flex-start;
-  }
-}
-@media (max-width: 600px) {
-  .item {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
-  .item .emoji {
-    align-self: flex-end;
-  }
-
-  .item .price {
-    width: 100%;
-    text-align: right;
-    margin-top: 5px;
-  }
-
-  .item .badges {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .item .buttons {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    gap: 8px;
-    margin-top: 5px;
-  }
-}
 dialog {
   max-width: 90%;
   max-height: 90vh;
@@ -1793,22 +1712,4 @@ dialog::backdrop {
 
 .dialog-form .actions button {
   flex: 1;
-}
-@media (max-width: 650px) {
-  .dialog-form .actions {
-    flex-direction: row;
-  }
-
-  .dialog-form .actions button {
-    width: auto;
-  }
-}
-dialog {
-  border: none;
-  border-radius: 28px;
-  overflow: hidden;
-}
-.dialog-form .actions button {
-  border-radius: 16px;
-  overflow: hidden;
 }

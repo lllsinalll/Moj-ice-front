@@ -370,6 +370,9 @@ function renderStats() {
 // =========================
 
 list.onclick = (e) => {
+  console.log("CLICK TARGET:", e.target);
+  console.log("BUTTON:", e.target.closest("button"));
+
   const button = e.target.closest("button");
 
   if (!button) return;
