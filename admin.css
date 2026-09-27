@@ -1661,3 +1661,84 @@ dialog::backdrop {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (max-width: 650px) {
+  .item {
+    flex-wrap: wrap;
+  }
+
+  .item .badges {
+    width: 100%;
+    order: 4;
+    margin-top: 8px;
+  }
+
+  .item .buttons {
+    width: 100%;
+    order: 5;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 650px) {
+  .item .buttons {
+    position: static;
+    transform: none;
+  }
+}
+@media (max-width: 650px) {
+  .item {
+    flex-wrap: wrap;
+  }
+
+  .item .badges {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .item .buttons {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+}
+@media (max-width: 650px) {
+  .item > .buttons {
+    flex-basis: 100%;
+    margin-top: 12px;
+  }
+}
+@media (max-width: 650px) {
+  .item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .item > .emoji {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .item > div:not(.emoji):not(.price):not(.buttons):not(.badges) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .item .price {
+    grid-column: 1 / -1;
+    width: 100%;
+    text-align: center;
+  }
+
+  .item .badges {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .item .buttons {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
