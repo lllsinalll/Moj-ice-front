@@ -81,6 +81,10 @@ async function loadProductsFromMongoDB() {
         price: product.price,
         image: product.image || "",
         emoji: category.emoji,
+
+        available: product.available !== false,
+        popular: product.popular || false,
+        discount: product.discount || 0,
       });
     });
 

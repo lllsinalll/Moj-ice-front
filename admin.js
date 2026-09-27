@@ -4,6 +4,10 @@ const list = document.querySelector("#list");
 
 const $ = (id) => document.getElementById(id);
 
+const itemStock = $("itemStock");
+const itemPopular = $("itemPopular");
+const itemDiscount = $("itemDiscount");
+
 const confirmDialog = $("confirmDialog");
 
 let pendingConfirm = null;
@@ -229,10 +233,46 @@ function render() {
                       </div>
                     </div>
 
-                    <div class="price">
-                      ${Number(item.price).toLocaleString("fa-IR")}
-                      تومان
-                    </div>
+                   <div class="price">
+  ${
+    item.discount > 0
+      ? item.discount === 100
+        ? `<span class="free-price">رایگان</span>`
+        : `
+          <span class="old-price">
+            ${Number(item.price).toLocaleString("fa-IR")} تومان
+          </span>
+
+          <span class="new-price">
+            ${Math.round(
+              Number(item.price) * (1 - item.discount / 100)
+            ).toLocaleString("fa-IR")} تومان
+          </span>
+        `
+      : `
+        ${Number(item.price).toLocaleString("fa-IR")} تومان
+      `
+  }
+</div>
+                    <div class="badges">
+
+  ${
+    item.available === false
+      ? `<span class="badge out">ناموجود</span>`
+      : `<span class="badge stock">موجود</span>`
+  }
+
+  ${item.popular ? `<span class="badge popular">🔥 پرطرفدار</span>` : ""}
+
+  ${
+    item.discount === 100
+      ? `<span class="badge discount">رایگان</span>`
+      : item.discount > 0
+      ? `<span class="badge discount">${item.discount}% تخفیف</span>`
+      : ""
+  }
+
+</div>
 
                     <div class="buttons">
 
@@ -272,6 +312,57 @@ function render() {
       `
     )
     .join("");
+  renderStats();
+}
+
+function renderStats() {
+  const stats = document.getElementById("stats");
+
+  const data = getMenuData();
+
+  const items = data.categories.flatMap((category) => category.items);
+
+  const total = items.length;
+
+  const available = items.filter((item) => item.available !== false).length;
+
+  const unavailable = items.filter((item) => item.available === false).length;
+
+  const popular = items.filter((item) => item.popular).length;
+
+  const discount = items.filter((item) => item.discount > 0).length;
+
+  stats.innerHTML = `
+    <div class="stat-card">
+      🍦
+      <b>${total}</b>
+      <span>کل محصولات</span>
+    </div>
+
+    <div class="stat-card">
+      ✅
+      <b>${available}</b>
+      <span>موجود</span>
+    </div>
+
+    <div class="stat-card">
+      🚫
+      <b>${unavailable}</b>
+      <span>ناموجود</span>
+    </div>
+
+    <div class="stat-card">
+      🔥
+      <b>${popular}</b>
+      <span>پرطرفدار</span>
+    </div>
+
+    <div class="stat-card">
+      🏷
+      <b>${discount}</b>
+      <span>تخفیف‌دار</span>
+    </div>
+  `;
 }
 
 // =========================
@@ -366,6 +457,11 @@ function openItem(categoryId, productId = "") {
     itemPrice.value = item.price;
     itemEmoji.value = item.emoji || "";
     itemImage.value = item.image || "";
+    itemStock.checked = item.available !== false;
+
+    itemPopular.checked = item.popular || false;
+
+    itemDiscount.value = item.discount || 0;
 
     imagePreview.innerHTML = item.image
       ? `<img src="${item.image}" alt="پیش‌نمایش">`
@@ -375,6 +471,11 @@ function openItem(categoryId, productId = "") {
 
     itemCat.value = categoryId;
     itemId.value = "";
+    itemStock.checked = true;
+
+    itemPopular.checked = false;
+
+    itemDiscount.value = 0;
 
     imagePreview.innerHTML = "";
   }
@@ -423,16 +524,22 @@ itemForm.onsubmit = async (e) => {
     }
   }
 
+  const discount = Number(itemDiscount.value);
+
+  if (discount < 0 || discount > 100) {
+    showError(itemDiscount, "تخفیف باید بین ۰ تا ۱۰۰ درصد باشد.");
+    return;
+  }
+
   const product = {
     name: itemName.value.trim(),
-
     price: Number(itemPrice.value),
-
     category: category.title,
-
     ingredients: itemDesc.value.trim(),
-
     image: imageUrl,
+    available: itemStock.checked,
+    popular: itemPopular.checked,
+    discount: discount,
   };
 
   const action = id ? "ذخیره تغییرات آیتم" : "افزودن آیتم";
@@ -748,10 +855,7 @@ async function uploadImage(file) {
       resolve(null);
     };
 
-    xhr.open(
-      "POST",
-      "https://moj-ice-back.onrender.com/upload"
-    );
+    xhr.open("POST", "https://moj-ice-back.onrender.com/upload");
 
     xhr.send(formData);
   });

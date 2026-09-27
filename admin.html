@@ -48,6 +48,7 @@
           </div>
           <button id="addCat">＋ افزودن سربرگ</button>
         </div>
+        <div id="stats" class="stats"></div>
         <div id="list"></div>
       </main>
     </div>
@@ -91,7 +92,11 @@
         ><label class="field"
           >قیمت (تومان)<input id="itemPrice" type="number" min="0" /><small
             class="field-error"
-          ></small></label
+          ></small
+        ></label>
+
+
+          <small class="field-error"></small> </label
         ><label class="field"
           >ایموجی (اختیاری)<input id="itemEmoji" maxlength="4" /><small
             class="field-error"
@@ -120,6 +125,33 @@
         </div>
 
         <div id="imagePreview" class="image-preview"></div>
+        <div class="product-options">
+          <label class="switch-row">
+            <span> موجود است </span>
+
+            <input id="itemStock" type="checkbox" checked />
+          </label>
+
+          <label class="switch-row">
+            <span> 🔥 پرطرفدار </span>
+
+            <input id="itemPopular" type="checkbox" />
+          </label>
+
+          <label class="field">
+            درصد تخفیف
+
+            <input
+              id="itemDiscount"
+              type="number"
+              min="0"
+              max="100"
+              value="0"
+            />
+
+            <small class="field-error"></small>
+          </label>
+        </div>
         <div class="actions">
           <button type="button" class="cancel" onclick="itemDialog.close()">
             انصراف</button
